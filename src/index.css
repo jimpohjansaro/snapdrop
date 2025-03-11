@@ -1,0 +1,27 @@
+@import 'tailwindcss';
+
+@layer base {
+  /* Your base styles here */
+  :root {
+    @apply bg-blue-50 font-sans font-normal text-black antialiased;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+  }
+
+  #root {
+    @apply m-auto max-w-7xl p-8;
+  }
+
+  h1 {
+    @apply text-3xl;
+  }
+
+  h2 {
+    @apply text-2xl font-semibold;
+  }
+
+  h3 {
+    @apply text-xl font-semibold;
+  }
+}
