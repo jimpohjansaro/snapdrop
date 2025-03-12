@@ -18,7 +18,7 @@ const Layout = () => {
         <img
           onClick={() => navigate('/')}
           className="h-20 cursor-pointer"
-          src="/logo.png"
+          src="./logo.png"
           alt="kuva"
         />
         <Link to={'/'}>
