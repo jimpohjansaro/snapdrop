@@ -65,34 +65,40 @@ const Ratings = ({item}: {item: MediaItemWithOwner}) => {
   }, [item.media_id, user?.user_id]);
 
   return (
-    <div className="border-darkgrey flex flex-row items-center gap-4 rounded-md border-2 px-10 py-4">
-      <div className="flex flex-col items-center justify-center gap-4">
-        <h4>Current Rating: </h4>
+    <div className="border-darkgrey flex flex-col items-start pt-4">
+      <p className="pb-4 font-semibold">Ratings:</p>
+      <div className="flex flex-row items-center justify-center gap-4 text-gray-700">
+        <p className="font-semibold">Current Rating:</p>
         <Rating
           style={{maxWidth: 150}}
           value={averageRating}
           readOnly
           itemStyles={{
             itemShapes: Star,
-            activeFillColor: '#38a2bc',
-            inactiveFillColor: '#a8b3c5',
+            activeFillColor: 'yellow',
+            inactiveFillColor: '#ccc',
           }}
         />
       </div>
-      <div className="flex flex-col items-center justify-center gap-4">
-        <h4>Rate this media: </h4>
+      <div className="flex flex-row items-center justify-center gap-2 text-gray-700">
+        <p className="font-semibold">Rate this media:</p>
         <Rating
           style={{maxWidth: 150}}
           value={userRating}
           onChange={(newRating: number) => setUserRating(newRating)}
           itemStyles={{
             itemShapes: Star,
-            activeFillColor: '#38a2bc',
-            inactiveFillColor: '#a8b3c5',
+            activeFillColor: 'yellow',
+            inactiveFillColor: '#ccc',
+            activeBoxBorderColor: 'red',
+            inactiveBoxBorderColor: 'blue',
           }}
         />
-        <button className="bg-red-700 p-4" onClick={handleSubmitRating}>
-          Submit rating
+        <button
+          className="ml-2 rounded-full border-2 border-blue-600 bg-blue-500 p-2 text-black hover:bg-blue-700"
+          onClick={handleSubmitRating}
+        >
+          Submit
         </button>
       </div>
     </div>
