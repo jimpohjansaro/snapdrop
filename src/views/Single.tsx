@@ -1,17 +1,43 @@
 import {MediaItemWithOwner} from 'hybrid-types/DBTypes';
 import {NavigateFunction, useLocation, useNavigate} from 'react-router';
 import Likes from '../components/Likes';
+import {useUserContext} from '../hooks/ContextHooks';
+import {useMedia} from '../hooks/apiHooks';
+//import {Ratings} from '../components/Ratings';
+import {Comments} from '../components/Comments';
+import {Ratings} from '../components/Ratings';
 
 const Single = () => {
   const navigate: NavigateFunction = useNavigate();
+  const {user} = useUserContext();
   const {state} = useLocation();
+  const {deleteMedia} = useMedia();
   const item: MediaItemWithOwner = state.item;
+
+  const handleDelete = async () => {
+    try {
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        console.error('Token missing');
+        return;
+      }
+
+      console.log('token: ', token);
+      console.log('item', item);
+      const deleteResponse = await deleteMedia(item.media_id, token);
+      console.log('Delete: ', deleteResponse);
+      navigate(-1);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
       <div className="rounded-lg bg-white shadow-md">
         {/* Kortin yläosa */}
-        <div className="rounded-t-lg bg-blue-300 p-4 text-white">
+        <div className="rounded-t-lg bg-blue-500 p-4 text-white">
           <h3 className="text-xl font-semibold">{item.title}</h3>
         </div>
 
@@ -53,7 +79,7 @@ const Single = () => {
 
           {/* Kuvaus */}
           <p className="mt-3 text-gray-800">
-            <b>{item.username} </b>
+            <b>@{item.username} </b>
             {item.description}
           </p>
 
@@ -67,15 +93,38 @@ const Single = () => {
               {Math.round(item.filesize / 1024)} kB
             </li>
           </ul>
+          <Ratings item={item} />
+          <Comments item={item} />
         </div>
 
         {/* Kortin alatunniste */}
-        <div className="flex justify-end rounded-b-lg bg-gray-100 p-4">
+        <div className="flex justify-end gap-4 rounded-b-lg bg-blue-200 p-4">
+          {(user?.user_id === item.user_id || user?.level_name === 'Admin') && (
+            <>
+              <button
+                onClick={() => navigate('/modify', {state: {item}})}
+                className="block w-full cursor-pointer rounded-2xl bg-orange-300 p-2 text-center transition-all duration-500 ease-in-out hover:bg-orange-500"
+              >
+                Modify
+              </button>
+              <button
+                onClick={() => {
+                  {
+                    handleDelete();
+                  }
+                  console.log('Delete painettu', item.media_id);
+                }}
+                className="block w-full cursor-pointer rounded-2xl bg-red-500 p-2 text-center transition-all duration-500 ease-in-out hover:bg-red-700"
+              >
+                Delete
+              </button>
+            </>
+          )}
           <button
             onClick={() => navigate(-1)}
-            className="rounded bg-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-400"
+            className="block w-full cursor-pointer rounded-2xl bg-gray-300 p-2 text-center transition-all duration-500 ease-in-out hover:bg-gray-500"
           >
-            Palaa takaisin
+            Go back
           </button>
         </div>
       </div>

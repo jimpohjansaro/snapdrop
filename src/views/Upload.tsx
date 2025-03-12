@@ -1,7 +1,7 @@
 import {ChangeEvent, useRef, useState} from 'react';
 import {useForm} from '../hooks/formHooks';
 import {useFile, useMedia} from '../hooks/apiHooks';
-//import {useNavigate} from 'react-router';
+// import {useNavigate} from 'react-router';
 
 const Upload = () => {
   const [uploading, setUploading] = useState<boolean>(false);

@@ -1,21 +1,29 @@
-import {Link, Outlet} from 'react-router';
+import {Link, NavigateFunction, Outlet, useNavigate} from 'react-router';
 import {useUserContext} from '../hooks/ContextHooks';
 import {useEffect} from 'react';
 
 const Layout = () => {
+  const navigate: NavigateFunction = useNavigate();
   // jos käyttäjää ei ole, kutsu handleAutoLogin()
   const {user, handleAutoLogin} = useUserContext();
   useEffect(() => {
     if (!user) {
       handleAutoLogin();
     }
-  }, []);
+  });
 
   return (
     <>
       <div className="justify-left flex h-20 flex-row items-center">
-        <img className="h-20" src="/logo.png" alt="kuva" />
-        <h1 className="pl-2 font-bold">Snapdrop</h1>
+        <img
+          onClick={() => navigate('/')}
+          className="h-20 cursor-pointer"
+          src="/logo.png"
+          alt="kuva"
+        />
+        <Link to={'/'}>
+          <h1 className="pl-2 font-bold">Snapdrop</h1>
+        </Link>
       </div>
       <div>
         <nav>

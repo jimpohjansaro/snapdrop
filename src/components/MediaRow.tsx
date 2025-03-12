@@ -1,6 +1,5 @@
 import {MediaItemWithOwner} from 'hybrid-types/DBTypes';
 import {Link} from 'react-router';
-import {useUserContext} from '../hooks/ContextHooks';
 import Likes from '../components/Likes';
 
 type MediaItemProps = {
@@ -9,7 +8,6 @@ type MediaItemProps = {
 };
 
 const MediaRow = (props: MediaItemProps) => {
-  const {user} = useUserContext();
   const {item} = props;
   return (
     <article className="flex w-full flex-col rounded-2xl border-2 border-blue-300 bg-blue-100 shadow-md">
@@ -40,7 +38,7 @@ const MediaRow = (props: MediaItemProps) => {
           >
             Show
           </Link>
-          {(user?.user_id === item.user_id || user?.level_name === 'Admin') && (
+          {/* {(user?.user_id === item.user_id || user?.level_name === 'Admin') && (
             <>
               <button
                 onClick={() => {
@@ -59,7 +57,7 @@ const MediaRow = (props: MediaItemProps) => {
                 Delete
               </button>
             </>
-          )}
+          )} */}
         </div>
         <p className="text-sm">
           {(() => {
